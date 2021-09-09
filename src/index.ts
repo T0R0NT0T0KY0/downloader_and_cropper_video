@@ -5,5 +5,4 @@ const filepath = process.env.FILEPATH;
 
 export const run = async () => {
     const data = await getDataFromEXEL(filepath);
-    console.log(data)
 }
