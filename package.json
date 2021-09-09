@@ -2,12 +2,13 @@
   "name": "downloader_and_cropper_video",
   "version": "1.0.0",
   "description": "youtube video downloader and crop",
-  "main": "index.js",
+  "main": "Main.ts",
   "dependencies": {
     "@types/node": "^7.10.14",
     "dotenv": "^10.0.0",
     "node-xlsx": "^0.17.1",
-    "xlsx": "^0.17.1"
+    "xlsx": "^0.17.1",
+    "youtube-dl-exec": "^1.2.5"
   },
   "devDependencies": {
     "nodemon": "^2.0.12",
