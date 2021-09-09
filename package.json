@@ -15,7 +15,8 @@
   },
   "scripts": {
     "test": "npm test",
-    "dev": "nodemon --exec ts-node src/Main.ts"
+    "dev": "nodemon --exec ts-node src/Main.ts",
+	"start": "ts-node src/Main.ts"
   },
   "repository": {
     "type": "git",

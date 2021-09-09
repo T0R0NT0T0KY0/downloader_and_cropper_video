@@ -1,2 +1,18 @@
-# downloader_and_cropper_video
-youtube video downloader and crop
+# Программа для загрузки видео на minio 
+`(in developing)`
+В переменные окружения указать
+```
+FILEPATH=filepath/filename.xlsx
+```
+###Порядок действий программы:
+- Парсит exel файл (+)
+- находит ссылки на youtube для скачивания в exel
+- Скачивает видео
+- обрезает по параметрам в xel
+- загружает на minio
+### для разработки:
+- npm i (install) установить зависимости
+- npm run dev для разработки используя nodemon
+- npm run start для обычного запуска программы 
+
+> > > > > > > > > > > > > > >
