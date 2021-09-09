@@ -6,7 +6,8 @@
   "dependencies": {
     "@types/node": "^7.10.14",
     "dotenv": "^10.0.0",
-    "node-xlsx": "^0.17.1"
+    "node-xlsx": "^0.17.1",
+    "xlsx": "^0.17.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.12",
@@ -16,7 +17,7 @@
   "scripts": {
     "test": "npm test",
     "dev": "nodemon --exec ts-node src/Main.ts",
-	"start": "ts-node src/Main.ts"
+    "start": "ts-node src/Main.ts"
   },
   "repository": {
     "type": "git",

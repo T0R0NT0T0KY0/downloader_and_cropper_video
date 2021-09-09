@@ -1,4 +1,4 @@
-import xlsx from 'node-xlsx';
+const XLSX = require('xlsx');
 
 /**
  * returns the contents of an Excel file
@@ -6,9 +6,8 @@ import xlsx from 'node-xlsx';
  */
 export const getDataFromEXEL = async (filepath: string) => {
     try {
-        const data = xlsx.parse(filepath);
-        console.log({data});
-        return data;
+        const workbook = XLSX.readFile(filepath);
+        return XLSX.utils.sheet_to_json(workbook.Sheets['Лист1']);
     } catch (e) {
         console.log({e})
     }
