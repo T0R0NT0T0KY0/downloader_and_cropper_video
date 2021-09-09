@@ -1,0 +1,30 @@
+{
+  "name": "downloader_and_cropper_video",
+  "version": "1.0.0",
+  "description": "youtube video downloader and crop",
+  "main": "index.js",
+  "dependencies": {
+    "@types/node": "^7.10.14",
+    "dotenv": "^10.0.0",
+    "node-xlsx": "^0.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
+  },
+  "scripts": {
+    "test": "npm test",
+    "dev": "nodemon --exec ts-node src/Main.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/T0R0NT0T0KY0/downloader_and_cropper_video.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/T0R0NT0T0KY0/downloader_and_cropper_video/issues"
+  },
+  "homepage": "https://github.com/T0R0NT0T0KY0/downloader_and_cropper_video#readme"
+}
