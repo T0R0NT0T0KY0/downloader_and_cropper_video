@@ -1,5 +1,5 @@
 import {raw} from "youtube-dl-exec";
-
+import fetch from 'node-fetch';
 
 export const getVideoLink = async (url: string) => {
     const data = await raw(url, {
@@ -20,7 +20,7 @@ export const getVideoLink = async (url: string) => {
 }
 
 export const downloadFile = async (link: string) => {
-    return  await fetch(link)
+    return fetch(link)
         .then((response) => {
             return response.body;
         }).catch(()=> null);
