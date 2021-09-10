@@ -1,11 +1,13 @@
 # Программа для загрузки видео на minio 
 `(in developing)`
 `for liga dostizheny`
-
-В переменные окружения указать
+### Для запуска программы:
+ - В переменные окружения указать
 ```
 FILEPATH=filepath/filename.xlsx
 ```
+ - [скачать ffmpeg и установить в переменные среды](http://blog.gregzaal.com/how-to-install-ffmpeg-on-windows/)
+    
 ###Порядок действий программы:
 - Парсит exel файл `(+)`
 - находит ссылки на youtube для скачивания в exel `(+)`

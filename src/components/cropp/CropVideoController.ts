@@ -1,20 +1,22 @@
-import ffmpeg from 'fluent-ffmpeg';
+const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
+const ffmpeg = require('fluent-ffmpeg');
+ffmpeg.setFfmpegPath(ffmpegPath);
 
-export const cropVideoController = (videoStream) => {
+export const cropVideoController = async (filepath, format: string, skip, duration, saveTo) => {
     try {
-        console.log({videoStream})
-        const command = ffmpeg(videoStream)
-            .inputFPS(29.7)
-            .seekInput(5)
+        return  ffmpeg()
+            .input(filepath)
+            .audioCodec('aac')
             .videoCodec('libx264')
             .format('mp4')
-            .autopad(true, 'black')
-            .duration(20)
-            .output('testFFMPEG.mp4')
-            .run();
-        console.log({command})
-        return command;
+            .seekInput(skip)
+            .duration(duration)
+            .autopad(true, '#000000')
+            .on('end', () => {
+                console.log('Processing finished !');
+            })
+            .save(saveTo)
     } catch (e) {
-        console.log({error: e.code});
+        console.log({error: e});
     }
 }

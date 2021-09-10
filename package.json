@@ -4,6 +4,8 @@
   "description": "youtube video downloader and crop",
   "main": "Main.ts",
   "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "@types/fluent-ffmpeg": "^2.1.18",
     "@types/node": "^7.10.14",
     "dotenv": "^10.0.0",
     "fluent-ffmpeg": "^2.1.2",
