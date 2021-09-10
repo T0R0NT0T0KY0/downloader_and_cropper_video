@@ -1,5 +1,5 @@
 import {raw} from "youtube-dl-exec";
-
+import fetch from "node-fetch";
 
 export const getVideoLink = async (url: string) => {
     const data = await raw(url, {
@@ -19,9 +19,21 @@ export const getVideoLink = async (url: string) => {
         .find(value => value['format_note'] === '1080p').url;
 }
 
-export const downloadFile = async (link: string) => {
-    return  await fetch(link)
-        .then((response) => {
-            return response.body;
-        }).catch(()=> null);
+export const getDataStream = async (link: string) => {
+    return new Promise((resolve) => {
+        fetch(link)
+            .then((response) => {
+                const dataStream = response.body;
+                const chunks = [];
+                dataStream.on("data", (chunk) => {
+                    chunks.push(chunk);
+                });
+                dataStream.on("end", () => {
+                    return resolve(Buffer.concat(chunks));
+                });
+                dataStream.on("error", (err) => {
+                    return [err];
+                });
+            }).catch(() => null);
+    })
 }
