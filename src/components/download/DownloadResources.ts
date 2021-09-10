@@ -1,6 +1,7 @@
 import {raw} from "youtube-dl-exec";
 
-export const download = async (url: string) => {
+
+export const getVideoLink = async (url: string) => {
     const data = await raw(url, {
         dumpSingleJson: true,
         noWarnings: true,
@@ -14,8 +15,13 @@ export const download = async (url: string) => {
         return false;
     }
     //todo search min by value['filesize']
-    const link = JSON.parse(data.stdout).formats
-        .filter(value => value['format_note'] === '1080p').url;
-    console.log({link});
-    fetch(link).then(r => console.log(r))
+    return JSON.parse(data.stdout).formats
+        .find(value => value['format_note'] === '1080p').url;
+}
+
+export const downloadFile = async (link: string) => {
+    return  await fetch(link)
+        .then((response) => {
+            return response.body;
+        }).catch(()=> null);
 }
