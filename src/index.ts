@@ -2,6 +2,9 @@ import {getDataFromEXCEL} from './resources/excel/parser';
 import {config} from "dotenv";
 import {DownloadController} from "./components/download/DownloadController";
 import {cropVideoController} from "./components/cropp/CropVideoController";
+import {uploadFileToMinio} from "./resources/minio/Minio";
+import * as process from "process";
+import * as fs from "fs";
 
 config();
 const filepath = process.env.FILEPATH;
@@ -18,8 +21,7 @@ export const run = async () => {
             return;
         }
         //todo set status "downloaded"
-        const skip = d['start'];
-        const croppedVideo = await cropVideoController(rawName, 'mp4', skip, d['end'] - skip,
+        const croppedVideo = await cropVideoController(rawName, 'mp4', d['start'], d['duration'],
             croppedName);
         if (!croppedVideo) {
             // todo set status "ERR crop"
@@ -27,5 +29,10 @@ export const run = async () => {
         }
         //todo set status "cropped"
         // todo delete downloaded video
+        await uploadFileToMinio({ bucket: process.env.MINIO_BUCKET,
+            fileName: process.env.MINIO_PATH + '/' + d['saved file name'],
+            buff: fs.readFileSync(croppedName)
+        })
+        //todo set file link on minio
     }
 }

@@ -14,11 +14,10 @@ export const cropVideoController = async (filepath, format: string, skip, durati
             .on('end', () => {
                 console.log(`Video ${saveTo} was cropped !`);
             })
-            .on('error', () => {
-                console.log(`Error with Video ${saveTo}. Wasn't cropped !`);
-                return null;
+            .on('error', function(err) {
+                console.log('Cannot process video: ' + err.message);
             })
-            .save(saveTo)
+            .save(saveTo);
     } catch (e) {
         console.log({error: e});
     }

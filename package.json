@@ -6,9 +6,11 @@
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@types/fluent-ffmpeg": "^2.1.18",
+    "@types/minio": "^7.0.10",
     "@types/node": "^7.10.14",
     "dotenv": "^10.0.0",
     "fluent-ffmpeg": "^2.1.2",
+    "minio": "^7.0.19",
     "node-fetch": "^2.6.1",
     "node-xlsx": "^0.17.1",
     "xlsx": "^0.17.1",
