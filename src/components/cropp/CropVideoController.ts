@@ -8,12 +8,15 @@ export const cropVideoController = async (filepath, format: string, skip, durati
             .input(filepath)
             .audioCodec('aac')
             .videoCodec('libx264')
-            .format('mp4')
+            .format(format)
             .seekInput(skip)
             .duration(duration)
-            .autopad(true, '#000000')
             .on('end', () => {
-                console.log('Processing finished !');
+                console.log(`Video ${saveTo} was cropped !`);
+            })
+            .on('error', () => {
+                console.log(`Error with Video ${saveTo}. Wasn't cropped !`);
+                return null;
             })
             .save(saveTo)
     } catch (e) {
