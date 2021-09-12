@@ -14,8 +14,7 @@ export const uploadFileToMinio = ({ bucket, fileName, buff }) => {
 };
 
 
-const getMinioClient = () =>
-{
+const getMinioClient = () => {
     return new Client({
         endPoint: process.env.MINIO_ENDPOINT,
         port: +process.env.MINIO_PORT,
@@ -23,5 +22,13 @@ const getMinioClient = () =>
         accessKey: process.env.MINIO_ACCESS_KEY,
         secretKey: process.env.MINIO_SECRET_KEY,
     });
+}
+
+
+
+export const getFileURI = (fileName) => {
+    const protocol = !!+process.env.MINIO_USE_SSL? 'https': 'http';
+
+    return `${protocol}://${process.env.MINIO_ENDPOINT}:${process.env.MINIO_PORT}/${process.env.MINIO_PATH}/${fileName}`
 }
 
