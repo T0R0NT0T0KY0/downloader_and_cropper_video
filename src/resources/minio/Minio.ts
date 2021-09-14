@@ -29,6 +29,6 @@ const getMinioClient = () => {
 export const getFileURI = (fileName) => {
     const protocol = !!+process.env.MINIO_USE_SSL? 'https': 'http';
 
-    return `${protocol}://${process.env.MINIO_ENDPOINT}:${process.env.MINIO_PORT}/${process.env.MINIO_PATH}/${fileName}`
+    return `${protocol}://${process.env.MINIO_ENDPOINT}:${process.env.MINIO_PORT}/${process.env.MINIO_PATH}/${process.env.MINIO_PATH}/${fileName}`
 }
 

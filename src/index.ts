@@ -13,15 +13,19 @@ export const run = async () => {
     const data = await getDataFromEXCEL(filePathToEXCEL);
     for (let i = 2; i < data.length + 2; i++) {
         const d = data[i - 2];
-        const sFName = d['saved file name'].replace(/\s/g, '_');
+        const sFName = d['saved file name'].replace(/\s/g, '_').replace(/(A-Z)/, '$1'.toLowerCase());
         const rawName = `raw_videos/raw_${sFName}`;
+        if (d['status'] === 'on minio') {
+            console.log(`${sFName} was on minio already`)
+            continue;
+        }
         const croppedName = `crop_videos/cropped_${sFName}`;
         console.log(`start ${sFName}`)
         const video = await (DownloadController(d['link to download'], rawName)
             .then((data) => {
                 console.log(`downloaded ${sFName}`);
                 return data;
-            }));
+            }, err => console.log({downloadedError: err})));
 
         if (!video) {
             return updateEXCEL(filePathToEXCEL, i, 'status', 'ERR download')
@@ -31,7 +35,6 @@ export const run = async () => {
             croppedName)
             .then(async (cropped) => {
                 console.log(`cropped ${sFName}`)
-                console.log({cropped})
                 await deleteVideo(rawName);
                 return cropped;
             }));
@@ -39,21 +42,24 @@ export const run = async () => {
         if (!croppedVideo) {
             return updateEXCEL(filePathToEXCEL, i, 'status', 'ERR crop')
         }
-        const dt = await uploadFileToMinio({
-            bucket: process.env.MINIO_BUCKET,
-            fileName: process.env.MINIO_PATH + '/' + sFName,
-            buff: fs.readFileSync(croppedName)
-        }).then(async (data) => {
-            await deleteVideo(croppedName);
-            return data;
-        })
-        if (dt[0]) {
+        console.log({croppedName})
+        try {
+            await uploadFileToMinio({
+                bucket: process.env.MINIO_BUCKET,
+                fileName: process.env.MINIO_PATH + '/' + sFName,
+                buff: fs.readFileSync(croppedName)
+            }).then(async (data) => {
+                await deleteVideo(croppedName);
+                return data;
+            })
+            await updateEXCEL(filePathToEXCEL, i, 'status', 'on minio');
+            await updateEXCEL(filePathToEXCEL, i, 'minio link', getFileURI(sFName));
+        } catch (e) {
             updateEXCEL(filePathToEXCEL, i, 'status', 'err minio');
-            return console.log(`minio err ${sFName}`);
+            console.log(`minio err ${sFName}`);
         }
-        await updateEXCEL(filePathToEXCEL, i, 'status', 'on minio');
-        await updateEXCEL(filePathToEXCEL, i, 'minio link', getFileURI(sFName));
         await console.log(`finish ${sFName}`);
+        await console.log(`-------------------------`);
     }
 }
 
