@@ -15,26 +15,17 @@ export const getDataFromEXCEL = async (filepath: string) => {
 }
 export const updateEXCEL = async (filepath: string, line: number, column, value) => {
     try {
-        // const workBook = XLSX.readFileSync(filepath);
-        // // const worksheet = workBook.Sheets['Лист1'];
-        // // workSheetJson[line][column] = value;
-        // const ws = workBook.Sheets['Лист1']
-        // workBook.Sheets['Лист1'] = XLSX.utils.sheet_add_json(workBook.Sheets['Лист1'],
-        //     [JSON.parse(`{"${column}": "${value}"}`)])
-        //
-        // console.log({wsj: XLSX.utils.sheet_to_json(workBook.Sheets['Лист1'])})
-        // console.log({workBook: workBook.Sheets['Лист1']})
-        // // workBook.Sheets['Лист1']
-        // XLSX.writeFileSync(workBook, 'filepath.xlsx');
-        // return true;
-        //
-        console.log(column)
         let workbook = new Excel.Workbook();
         await workbook.xlsx.readFile(filepath);
-        let worksheet = workbook.getWorksheet('Лист1');
-        // header id name dob
-        let row = worksheet.getRow(line);
-        row.getCell(column).value = value;
+        const worksheet = workbook.getWorksheet('Лист1');
+        const sheetToJson = XLSX.readFile(filepath).Sheets['Лист1'];
+
+        const cell = Object.keys(sheetToJson)
+            .find((key) => sheetToJson[key]['v'] && sheetToJson[key]['v'] === column ? key : false)
+            .replace(/\d/g, '');
+
+        const row = worksheet.getRow(line);
+        row.getCell(cell).value = value;
         row.commit();
         await workbook.xlsx.writeFile(filepath);
     } catch (e) {

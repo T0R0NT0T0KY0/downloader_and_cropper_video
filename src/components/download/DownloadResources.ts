@@ -41,8 +41,7 @@ export const getDataStream = async (link: string, saveTo: string) => {
     })
 }
 
-const codecs = new Set();
-codecs.add('vp9')
+const codecs = new Set().add('vp9')
     .add('avc1.4d400c')
     .add('avc1.4d401e')
     //bad   .add('av01.0.00M.08')

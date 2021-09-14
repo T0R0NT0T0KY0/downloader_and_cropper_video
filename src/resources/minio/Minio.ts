@@ -1,6 +1,6 @@
 const {Client} = require('minio');
 
-export const uploadFileToMinio = ({ bucket, fileName, buff }) => {
+export const uploadFileToMinio = async ({ bucket, fileName, buff }) => {
     const minioClient = getMinioClient();
     return new Promise((resolve, reject) => {
         minioClient.putObject(bucket, fileName, buff, (err, etag) => {
